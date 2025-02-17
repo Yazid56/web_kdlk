@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil KDLK - Universitas Hasyim Asy'ari</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Gaya untuk logo bulat */
+        .navbar-brand img {
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Efek ketika logo dihover */
+        .navbar-brand img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Hero Section dengan background gambar */
+        .hero {
+            background-image: url('assets/img/images.png'); /* Ganti dengan gambar yang diinginkan */
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            position: relative;
+        }
+
+        /* Mengatur teks di atas background */
+        .hero .container {
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Styling footer */
+        footer {
+            background-color: #003366;
+            font-size: 0.9rem;
+        }
+
+        /* Navbar dengan menu dekat logo */
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Menambahkan jarak antar item menu */
+        }
+
+        /* Styling menu dan dropdown */
+        .navbar-nav .nav-item .nav-link {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-item .nav-link:hover {
+            background-color: #007bff;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .navbar-nav .nav-item.dropdown .dropdown-menu {
+            background-color: #343a40;
+            border-radius: 5px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .dropdown-item {
+            font-size: 1.1rem;
+            color: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        /* Modal untuk gambar logo */
+        .modal-content {
+            max-width: 90%;
+            margin: auto;
+        }
+
+        /* Navbar brand */
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Styling untuk menu dropdown */
+        .dropdown-toggle::after {
+            content: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html" data-bs-toggle="modal" data-bs-target="#logoModal">
+                <img src="assets/img/logo.png" alt="Logo KKN" height="50"> KDLK 13 Sumengko
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Menu dengan ikon dan dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-house-door"></i> Menu
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="about.html"><i class="bi bi-info-circle"></i> Tentang KDLK</a></li>
+                            <li><a class="dropdown-item" href="program.html"><i class="bi bi-clipboard-check"></i> Program Kerja</a></li>
+                            <li><a class="dropdown-item" href="galeri.html"><i class="bi bi-images"></i> Galeri</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero text-center text-white d-flex align-items-center justify-content-center">
+        <div class="container">
+            <h1>Program KDLK Universitas Hasyim Asy'ari</h1>
+            <p>Universitas Hasyim Asy'ari - Tahun 2025</p>
+        </div>
+    </header>
+
+    <!-- Modal untuk melihat logo yang lebih besar -->
+    <div class="modal fade" id="logoModal" tabindex="-1" aria-labelledby="logoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="assets/img/logo.png" alt="Logo KKN" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-white text-center p-3">
+        &copy; 2025 KDLK UNHASY | Semua Hak Dilindungi
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

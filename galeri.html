@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri KDLK - UNHASY</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #007bff, #0056b3);
+        }
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .menu-container {
+            position: relative;
+        }
+        .menu-button {
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        .menu-dropdown {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            width: 220px;
+            z-index: 1000;
+        }
+        .menu-dropdown a {
+            display: block;
+            padding: 10px;
+            color: black;
+            text-decoration: none;
+            border-bottom: 1px solid #ddd;
+        }
+        .menu-dropdown a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        .gallery-container {
+            padding: 50px 0;
+        }
+        .gallery-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+            font-size: 2rem;
+            color: #007bff;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            transform: rotateY(0deg);
+            transition: transform 0.6s;
+        }
+        .gallery-item:hover img {
+            transform: rotateY(15deg);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+        }
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: none;
+        }
+        .gallery-item:hover .delete-btn {
+            display: block;
+        }
+        .upload-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .upload-container input {
+            display: none;
+        }
+        .upload-label {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .upload-label:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark p-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand" href="index.html">UNHASY</a>
+            <div class="menu-container">
+                <button class="menu-button" id="menuToggle"><i class="bi bi-list"></i></button>
+                <div class="menu-dropdown" id="menuDropdown">
+                    <a href="about.html"><i class="bi bi-info-circle"></i> Tentang KDLK</a>
+                    <a href="program.html"><i class="bi bi-clipboard-check"></i> Program Kerja</a>
+                    <a href="galeri.html"><i class="bi bi-images"></i> Galeri</a>
+                    <div class="close-menu" id="backHome"><i class="bi bi-arrow-left-circle"></i> Kembali</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container gallery-container">
+        <h2 class="gallery-title">Galeri</h2>
+        <div class="upload-container">
+            <label for="fileInput" class="upload-label"><i class="bi bi-upload"></i> Tambah Foto</label>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+        <div class="row g-4" id="gallery"></div>
+    </div>
+
+    <script>
+        document.getElementById("menuToggle").addEventListener("click", function () {
+            document.getElementById("menuDropdown").style.display = "block";
+        });
+        
+        document.getElementById("backHome").addEventListener("click", function () {
+            window.location.href = "index.html";
+        });
+        
+        document.addEventListener("click", function (event) {
+            let menuDropdown = document.getElementById("menuDropdown");
+            let menuToggle = document.getElementById("menuToggle");
+            if (!menuDropdown.contains(event.target) && !menuToggle.contains(event.target)) {
+                menuDropdown.style.display = "none";
+            }
+        });
+        
+        const fileInput = document.getElementById('fileInput');
+        const gallery = document.getElementById('gallery');
+
+        function loadGallery() {
+            gallery.innerHTML = '';
+            const images = JSON.parse(localStorage.getItem('galleryImages')) || [];
+            images.forEach((src, index) => {
+                const col = document.createElement('div');
+                col.className = 'col-md-4';
+                col.innerHTML = `
+                    <div class="gallery-item position-relative">
+                        <img src="${src}" alt="KKN Foto">
+                        <button class="delete-btn" onclick="deleteImage(${index})">&times;</button>
+                    </div>
+                `;
+                gallery.appendChild(col);
+            });
+        }
+
+        function saveImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const images = JSON.parse(localStorage.getItem('galleryImages')) || [];
+                    images.push(e.target.result);
+                    localStorage.setItem('galleryImages', JSON.stringify(images));
+                    loadGallery();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function deleteImage(index) {
+            const images = JSON.parse(localStorage.getItem('galleryImages')) || [];
+            images.splice(index, 1);
+            localStorage.setItem('galleryImages', JSON.stringify(images));
+            loadGallery();
+        }
+
+        fileInput.addEventListener('change', saveImage);
+        window.addEventListener('load', loadGallery);
+    </script>
+</body>
+</html>
